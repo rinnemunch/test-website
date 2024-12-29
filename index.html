@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simple Interactive Website</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+      }
+
+      body {
+        background-color: #f0f2f5;
+      }
+
+      nav {
+        background-color: #333;
+        padding: 1rem;
+        color: white;
+      }
+
+      nav h1 {
+        text-align: center;
+      }
+
+      .container {
+        max-width: 800px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+      }
+
+      .card {
+        background-color: white;
+        padding: 2rem;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        margin-bottom: 1.5rem;
+      }
+
+      .theme-toggle {
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-bottom: 1rem;
+        transition: background-color 0.3s;
+      }
+
+      .theme-toggle:hover {
+        background-color: #45a049;
+      }
+
+      .counter-container {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+        margin-bottom: 1rem;
+      }
+
+      .counter-btn {
+        background-color: #008cba;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      .counter-btn:hover {
+        background-color: #007399;
+      }
+
+      .todo-input {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 1rem;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+      }
+
+      .todo-list {
+        list-style: none;
+      }
+
+      .todo-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
+        background-color: #f8f9fa;
+        margin-bottom: 0.5rem;
+        border-radius: 4px;
+      }
+
+      .delete-btn {
+        background-color: #dc3545;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      .delete-btn:hover {
+        background-color: #c82333;
+      }
+
+      .dark-mode {
+        background-color: #1a1a1a;
+        color: white;
+      }
+
+      .dark-mode .card {
+        background-color: #333;
+        color: white;
+      }
+
+      .dark-mode .todo-item {
+        background-color: #404040;
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <h1>My Interactive Website</h1>
+    </nav>
+
+    <div class="container">
+      <div class="card">
+        <button class="theme-toggle">Toggle Dark Mode</button>
+        <h2>Counter Demo</h2>
+        <div class="counter-container">
+          <button class="counter-btn" id="decrease">-</button>
+          <span id="counter">0</span>
+          <button class="counter-btn" id="increase">+</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Todo List</h2>
+        <input type="text" class="todo-input" placeholder="Add a new todo..." />
+        <ul class="todo-list"></ul>
+      </div>
+    </div>
+
+    <script>
+      // Dark mode toggle
+      const themeToggle = document.querySelector(".theme-toggle");
+      themeToggle.addEventListener("click", () => {
+        document.body.classList.toggle("dark-mode");
+      });
+
+      // Counter functionality
+      let count = 0;
+      const counterDisplay = document.getElementById("counter");
+      const decreaseBtn = document.getElementById("decrease");
+      const increaseBtn = document.getElementById("increase");
+
+      decreaseBtn.addEventListener("click", () => {
+        count--;
+        counterDisplay.textContent = count;
+      });
+
+      increaseBtn.addEventListener("click", () => {
+        count++;
+        counterDisplay.textContent = count;
+      });
+
+      // Todo list functionality
+      const todoInput = document.querySelector(".todo-input");
+      const todoList = document.querySelector(".todo-list");
+
+      todoInput.addEventListener("keypress", (e) => {
+        if (e.key === "Enter" && todoInput.value.trim() !== "") {
+          const todoItem = document.createElement("li");
+          todoItem.className = "todo-item";
+
+          const todoText = document.createElement("span");
+          todoText.textContent = todoInput.value;
+
+          const deleteBtn = document.createElement("button");
+          deleteBtn.className = "delete-btn";
+          deleteBtn.textContent = "Delete";
+          deleteBtn.addEventListener("click", () => {
+            todoItem.remove();
+          });
+
+          todoItem.appendChild(todoText);
+          todoItem.appendChild(deleteBtn);
+          todoList.appendChild(todoItem);
+
+          todoInput.value = "";
+        }
+      });
+    </script>
+  </body>
+</html>
